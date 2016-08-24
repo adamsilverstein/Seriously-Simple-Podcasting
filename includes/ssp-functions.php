@@ -228,7 +228,7 @@ if ( ! function_exists( 'ssp_episode_ids' ) ) {
 			$args['post_type']  = ssp_post_types();
 			$args['meta_query'] = array(
 				array(
-					'key'     => 'audio_file',
+					'key'     => '_audio_id',
 					'compare' => '!=',
 					'value'   => '',
 				),
