@@ -241,7 +241,7 @@ if ( ! function_exists( 'ssp_episode_ids' ) ) {
 		$podcast_episodes = wp_cache_get( $key, $group );
 
 		// If nothing in cache then fetch episodes again and store in cache
-		if ( $podcast_episodes === false ) {
+		if ( SSP_DEBUG || $podcast_episodes === false ) {
 			$podcast_episodes = get_posts( $args );
 			wp_cache_set( $key, $podcast_episodes, $group, HOUR_IN_SECONDS * 12 );
 		}
@@ -310,7 +310,7 @@ if ( ! function_exists( 'ssp_episodes' ) ) {
 		$posts = wp_cache_get( $key, $group );
 
 		// If nothing in cache then fetch episodes again and store in cache
-		if ( $posts === false ) {
+		if ( SSP_DEBUG || $posts === false ) {
 			$posts = get_posts( $args );
 			wp_cache_add( $key, $posts, $group, HOUR_IN_SECONDS * 12 );
 		}
