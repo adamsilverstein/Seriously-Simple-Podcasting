@@ -343,27 +343,37 @@ if ( isset( $category1['category'] ) && $category1['category'] ) { ?>
 					}
 				}
 
+				/**
+				 * Get the WAMU audio data.
+				 */
+				$attached_audio_file = get_attached_media( 'audio/mpeg', get_the_ID() );
+				$attached_audio_file = array_shift( $attached_audio_file );
+				$wamu_audio_details  = wp_prepare_attachment_for_js( $attached_audio_file->ID );
+				$wamu_audio_file     = $wamu_audio_details['url'];
+				$wamu_audio_title    = $wamu_audio_details['title'];
+				$wamu_audio_length   = \wamu\wamu_cleanup_file_length( $wamu_audio_details['fileLength'] );
+				$wamu_file_size      = $wamu_audio_details['filesizeInBytes'];
+
 				// Episode duration (default to 0:00 to ensure there is always a value for this)
-				$duration = get_post_meta( get_the_ID(), 'duration', true );
+				$duration = $wamu_audio_length;
 				if ( ! $duration ) {
 					$duration = '0:00';
 				}
 
 				// File size
-				$size = get_post_meta( get_the_ID(), 'filesize_raw', true );
+				$size = $wamu_file_size;
 				if ( ! $size ) {
 					$size = 1;
 				}
-
+				$mime_type = 'audio/mpeg';
 				// File MIME type (default to MP3/MP4 to ensure there is always a value for this)
-				$mime_type = $ss_podcasting->get_attachment_mimetype( $audio_file );
+/*				$mime_type = $ss_podcasting->get_attachment_mimetype( $audio_file );
 				if ( ! $mime_type ) {
 					switch( $episode_type ) {
 						case 'audio': $mime_type = 'audio/mpeg'; break;
 						case 'video': $mime_type = 'video/mp4'; break;
 					}
 				}
-
 				// Episode explicit flag
 				$ep_explicit = get_post_meta( get_the_ID(), 'explicit', true );
 				if ( $ep_explicit && $ep_explicit == 'on' ) {
@@ -373,6 +383,7 @@ if ( isset( $category1['category'] ) && $category1['category'] ) { ?>
 					$itunes_explicit_flag = 'clean';
 					$googleplay_explicit_flag = 'No';
 				}
+*/
 
 				// Episode block flag
 				$ep_block = get_post_meta( get_the_ID(), 'block', true );
@@ -423,7 +434,7 @@ if ( isset( $category1['category'] ) && $category1['category'] ) { ?>
 			<itunes:image href="<?php echo esc_url( $episode_image ); ?>"></itunes:image>
 			<googleplay:image href="<?php echo esc_url( $episode_image ); ?>"></googleplay:image>
 <?php } ?>
-			<enclosure url="<?php echo esc_url( $enclosure ); ?>" length="<?php echo esc_attr( $size ); ?>" type="<?php echo esc_attr( $mime_type ); ?>"></enclosure>
+			<enclosure url="<?php echo esc_url( $wamu_audio_file  ); ?>" length="<?php echo esc_attr( $size ); ?>" type="<?php echo esc_attr( $mime_type ); ?>"></enclosure>
 			<itunes:explicit><?php echo esc_html( $itunes_explicit_flag ); ?></itunes:explicit>
 			<googleplay:explicit><?php echo esc_html( $googleplay_explicit_flag ); ?></googleplay:explicit>
 			<itunes:block><?php echo esc_html( $block_flag ); ?></itunes:block>
