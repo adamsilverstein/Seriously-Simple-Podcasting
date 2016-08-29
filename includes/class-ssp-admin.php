@@ -170,7 +170,7 @@ class SSP_Admin {
 			'query_var' => true,
 			'can_export' => true,
 			'rewrite' => array( 'slug' => $slug, 'feeds' => true ),
-			'capability_type' => 'post',
+			'capability_type' => array( 'podcast','podcasts' ),
 			'has_archive' => true,
 			'hierarchical' => false,
 			'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes', 'comments', 'author', 'custom-fields', 'publicize' ),
