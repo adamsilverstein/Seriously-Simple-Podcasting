@@ -66,8 +66,8 @@ class SSP_Admin {
 			add_action( 'admin_init', array( $this, 'update_enclosures' ) );
 
 			// Episode meta box
-			add_action( 'admin_init', array( $this, 'register_meta_boxes' ) );
-			add_action( 'save_post', array( $this, 'meta_box_save' ), 10, 1 );
+			//add_action( 'admin_init', array( $this, 'register_meta_boxes' ) );
+			//add_action( 'save_post', array( $this, 'meta_box_save' ), 10, 1 );
 
 			// Episode edit screen
 			add_filter( 'enter_title_here', array( $this, 'enter_title_here' ) );
