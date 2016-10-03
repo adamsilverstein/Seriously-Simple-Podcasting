@@ -417,10 +417,12 @@ if ( isset( $category1['category'] ) && $category1['category'] ) { ?>
 				$itunes_subtitle = str_replace( array( '>', '<', '\'', '"', '`', '[andhellip;]', '[&hellip;]', '[&#8230;]' ), array( '', '', '', '', '', '', '', '' ), $itunes_subtitle );
 				$itunes_subtitle = mb_substr( $itunes_subtitle, 0, 254 );
 				$itunes_subtitle = apply_filters( 'ssp_feed_item_itunes_subtitle', $itunes_subtitle, get_the_ID() );
+				$title = get_the_title_rss();
+				$author = apply_filters( 'ssp_feed_item_author', $author, get_the_id() );
 
 		?>
 		<item>
-			<title><?php esc_html( the_title_rss() ); ?></title>
+			<title><?php echo esc_html( $title ); ?></title>
 			<link><?php esc_url( the_permalink_rss() ); ?></link>
 			<pubDate><?php echo esc_html( mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ) ); ?></pubDate>
 			<dc:creator><?php echo $author; ?></dc:creator>
